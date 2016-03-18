@@ -7,15 +7,21 @@
 </head>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
-    <h1>{{name}}</h1>
+    <h1>data : {{data}}</h1>
+    <h1>status : {{status}}</h1>
+    <h1>headers : {{headers}}</h1>
+    <h1>config : {{config}}</h1>
 </div>
 
 <script>
     var app = angular.module('myApp', []);
     app.controller('myCtrl', function($scope, $http) {
         $http.get("../static/test.json")
-                .success(function(data,header,config,status) {
-                    $scope.name = data;
+                .success(function(data,status,headers,config) {
+                    $scope.data = data;
+                    $scope.status = status;
+                    $scope.headers = headers;
+                    $scope.config = config;
                 });
     });
 </script>

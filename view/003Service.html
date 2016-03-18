@@ -7,13 +7,41 @@
 </head>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
-    <h1>{{out}}</h1>
+    <h1>{{location}}</h1>
+    <h1>{{interval}}</h1>
+    <h1>{{timeout}}</h1>
+    <button ng-click="goto(anchorScroll)">点我，点我</button>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <h1 id="{{anchorScroll}}">还真点击了呀</h1>
 </div>
 
 <script>
     var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope,$location) {
-        $scope.out = $location.url();
+    app.controller('myCtrl', function($scope,$location,$timeout,$interval,$anchorScroll,$log) {
+        $scope.location = $location.absUrl();
+
+        $timeout(function(){
+            $scope.timeout = "Time Out";
+            $interval.cancel($promise)
+        },3000);
+
+        $promise = $interval(function(){
+            $scope.interval = new Date().toLocaleTimeString();
+        },1000);
+
+        $scope.anchorScroll = "anchorScroll";
+        $scope.goto = function (id) {
+            $location.hash(id);
+            $anchorScroll();
+        }
+
+        $interval(function(){
+            $log.debug("nice");
+            $log.error("error");
+        },1000);
+
     });
 </script>
 </body>
