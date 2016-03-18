@@ -7,11 +7,16 @@
 </head>
 <body>
 
-<div ng-app=""  data-ng-init="name='Vector'; lastName = 'Huang'">
+这里定义的是一个无名app，那么系统就会设置默认的app<br>
+之后初始化两个属性<br>
+之后设置model（输入），绑定输出<br>
+
+<div ng-app=""  ng-init="name='Vector'; lastName = 'Huang'">
     最简单的方式
     <p>名字 : <input type="text" ng-model="name"></p>
     <h1>FirstName {{name}}</h1>
     <h1>LastName {{lastName}}</h1>
+    <h1><span ng-bind="name"></span></h1>
 </div>
 
 <br >
