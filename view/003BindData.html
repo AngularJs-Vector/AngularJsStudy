@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="helloApp" ng-controller="helloCtrl">
+<head>
+    <meta charset="UTF-8">
+    <title>数据双向绑定</title>
+    <script src="../framework/angular/angular.js"></script>
+    <script src="../js/app.js"></script>
+</head>
+<body>
+    <!-- 使用{{name}} 方式如果Angular还没有接管DOM的是会出现{{}}等很难看的东西 -->
+    <h1>{{hello}}</h1>
+    <!-- Angular 还没有接管的时候也不会出现什么文字 -->
+    <h1 ng-bind="hello"></h1>
+</body>
+</html>

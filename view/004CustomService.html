@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CustomService</title>
+    <script src="../framework/angular/angular.js"></script>
+</head>
+<body>
+
+<div ng-app="app" ng-controller="ctrl">
+    <h1>{{onclick}}</h1>
+</div>
+
+<script>
+
+    var app = angular.module("app",[]);
+
+    app.service("customService",function(){
+        this.onClick = function (x) {
+            return  x;
+        }
+    });
+    app.controller("ctrl",function($scope,customService){
+        $scope.onclick = customService.onClick(232);
+    });
+
+
+</script>
+</body>
+</html>
