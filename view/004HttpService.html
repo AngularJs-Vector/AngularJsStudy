@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>HttpService</title>
     <script src="../framework/angular/angular.js" ></script>
+    <script src="../framework/jquery.min.js" ></script>
+    <script src="../js/network.js" ></script>
 </head>
 <body>
 <div ng-app="myApp" ng-controller="myCtrl">
@@ -14,15 +16,22 @@
 </div>
 
 <script>
-    var app = angular.module('myApp', []);
-    app.controller('myCtrl', function($scope, $http) {
-        $http.get("../static/test.json")
-                .success(function(data,status,headers,config) {
-                    $scope.data = data;
-                    $scope.status = status;
-                    $scope.headers = headers;
-                    $scope.config = config;
-                });
+    var app = angular.module('myApp', ["pocketService"]);
+    app.controller('myCtrl', function($scope,$log,$http,pocket) {
+        pocket.formData({
+            url:"/api/gossip/custom/create",
+            params:{
+                categoryId:1,
+                content:"你好吗？",
+                access_token:networkConfig.token
+            },
+            error: function (data, status) {
+                $log.debug(status + data);
+            },
+            success: function(data,status){
+                $log.debug(status + data);
+            }
+        })
     });
 </script>
 </body>
