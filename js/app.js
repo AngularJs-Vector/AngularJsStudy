@@ -80,3 +80,47 @@ otherApp.controller("hideShow", function ($scope) {
     }
 })
 
+var netApp = angular.module("netApp",[])
+
+netApp.controller("netCtrl",function($scope,pocket){
+    /**
+     * @param config
+     *
+     */
+
+    $scope.gossip = {
+        categoryId: 1,
+        content: "",
+        access_token: networkConfig.token,
+        images: undefined
+    }
+
+    $scope.create = function(){
+        var config = {
+            url:"/api/gossip/custom/create",
+            params:$scope.gossip,
+            success: function(data){
+                $scope.data = data
+            },
+            error: function(data,status){
+                $scope.data = data
+            }
+        }
+        pocket.formData(config)
+    }
+
+    $scope.like = function(form){
+        var config = {
+            url:"/api/gossip/custom/like",
+            params:form,
+            success: function(data){
+                $scope.data = data
+            },
+            error: function(data){
+                $scope.data = data
+            }
+        }
+        pocket.formData(config)
+    }
+})
+

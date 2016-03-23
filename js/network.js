@@ -8,14 +8,13 @@ var networkConfig = {
     token: "d82c205c-d17b-4d80-8738-5529ffd43404"
 };
 
-var pocketService = angular.module("pocketService", [])
 /**
  * 401 : 未登录的处理
  * 200 ：成功的处理
  *
  */
 
-pocketService.service("pocket", function ($http, $log) {
+netApp.service("pocket", function ($http, $log) {
     var baseParams = {
         platform: networkConfig.platform,
     }
@@ -42,34 +41,6 @@ pocketService.service("pocket", function ($http, $log) {
             }
         });
     }
-
-    /*  this.formdata = function () {
-     $http({
-     method: 'POST',
-     url: '/wechatapp/User/setAvatar',
-     data: data,
-     headers: {
-     'Content-Type': 'form-data'
-     },
-     transformRequest: function (data) {
-     var formData = new FormData();
-     formData.append('', data.adata);
-     formData.append('', data.adata);
-     return formData;
-     },
-     data: {
-     data: scope.avatar_data,
-     file: scope.avatar_file
-     }
-     }).success(function (d) {
-     //请求成功
-     cb(d);
-     }).error(function (err, status) {
-     console.log(err);
-     cb(err);
-     });
-     }
-     */
 
     this.post = function (post) {
         angular.extend(post.params, baseParams)
@@ -113,6 +84,15 @@ pocketService.service("pocket", function ($http, $log) {
         });
     }
 
+    /**
+     * {
+     *   url:
+     *   params:
+     *   success:
+     *   error:
+     * }
+     * @param post
+     */
     this.formData = function (post) {
         angular.extend(post.params, baseParams)
         var config = {
@@ -129,7 +109,12 @@ pocketService.service("pocket", function ($http, $log) {
             var formData = new FormData();
             for (var name in data) {
                 var value = data[name];
-                formData.append(name, value);
+
+                //需要删除post 里面的，我们不应该上传两个token 到服务器，不然处理很麻烦的
+                //需要一个，就不要上传数组
+                if(name !== "access_token"){
+                    formData.append(name, value);
+                }
             }
             return formData;
         }
@@ -139,9 +124,6 @@ pocketService.service("pocket", function ($http, $log) {
             config.params = {
                 access_token: post.params.access_token
             }
-            //需要删除post 里面的，我们不应该上传两个token 到服务器，不然处理很麻烦的
-            //需要一个，就不要上传数组
-            delete post.params.access_token
         }
         var promise = $http(config)
         promise.success(function (data, status, headers, config) {
