@@ -80,14 +80,13 @@ otherApp.controller("hideShow", function ($scope) {
     }
 })
 
-var netApp = angular.module("netApp",[])
+var netApp = angular.module("netApp", [])
 
-netApp.controller("netCtrl",function($scope,pocket){
+netApp.controller("netCtrl", function ($scope,$log, pocket) {
     /**
      * @param config
      *
      */
-
     $scope.gossip = {
         categoryId: 1,
         content: "",
@@ -95,28 +94,30 @@ netApp.controller("netCtrl",function($scope,pocket){
         images: undefined
     }
 
-    $scope.create = function(){
+    $scope.create = function () {
         var config = {
-            url:"/api/gossip/custom/create",
-            params:$scope.gossip,
-            success: function(data){
-                $scope.data = data
-            },
-            error: function(data,status){
-                $scope.data = data
-            }
+            url: "/api/gossip/custom/create",
+            params: $scope.gossip,
         }
         pocket.formData(config)
+            .success(function (data) {
+                $scope.data = data
+                $log.debug("created success")
+            })
+            .error(function (data) {
+                $scope.data = data
+                $log.debug("created error")
+            })
     }
 
-    $scope.like = function(form){
+    $scope.like = function (form) {
         var config = {
-            url:"/api/gossip/custom/like",
-            params:form,
-            success: function(data){
+            url: "/api/gossip/custom/like",
+            params: form,
+            success: function (data) {
                 $scope.data = data
             },
-            error: function(data){
+            error: function (data) {
                 $scope.data = data
             }
         }
@@ -124,3 +125,29 @@ netApp.controller("netCtrl",function($scope,pocket){
     }
 })
 
+/**
+ * 定义模板
+ */
+var directiveApp = angular.module("directiveApp", [])
+directiveApp.run(function ($templateCache) {
+    $templateCache.put("hello.html", "<h1>Hi TemplateCache</h1>")
+})
+directiveApp.directive("hello", function () {
+    return {
+        restrict: "AECM",
+        template: "<h1>Hello AngularJs!!</h1>",
+        replace: true
+    }
+})
+directiveApp.directive("helloCache", function ($templateCache) {
+    return {
+        restrict: "AE",
+        template: $templateCache.get("hello.html"),
+        replace: true
+    }
+})
+
+var app = angular.module("app", ["customDirective"])
+app.controller("appCtrl", function ($scope) {
+    $scope.names = [1, 2, 3, 4, 5, 56]
+})

@@ -40,6 +40,7 @@ netApp.service("pocket", function ($http, $log) {
                 get.error(data, status, headers, config)
             }
         });
+        return promise
     }
 
     this.post = function (post) {
@@ -82,6 +83,7 @@ netApp.service("pocket", function ($http, $log) {
                 post.error(data, status, headers, config)
             }
         });
+        return promise
     }
 
     /**
@@ -139,6 +141,7 @@ netApp.service("pocket", function ($http, $log) {
                 post.error(data, status, headers, config)
             }
         });
+        return promise
     }
 
     var buildUrl = function (obj) {
