@@ -3,7 +3,7 @@
  * date：2016/3/25 9:51
  */
 require.config({
-    baseUrl:"../js/appAdmin",
+    baseUrl:"../js/appAdmin", //导航到当前文件名路径
     paths : {
         "angular" : "../../framework/angular/angular",
         "network" :"../common/network"
