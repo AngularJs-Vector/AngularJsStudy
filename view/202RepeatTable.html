@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="app" ng-controller="controller">
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th ng-repeat="head in heads">{{head}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="bodys in list">
+            <td ng-repeat="body in bodys">{{body}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="../framework/jquery.min.js"></script>
+<script src="../framework/angular/angular.js"></script>
+<script>
+    var app = angular.module("app", [])
+    app.controller("controller", function ($scope,$log) {
+        $scope.heads = ["id","用户名","密码"]
+
+        var ds = [
+            {
+                id:"3",
+                password:"123456",
+                username:"vector"
+            }, {
+                id:"4",
+                password:"123456",
+                username:"huang"
+            }
+        ]
+        $scope.list = [];
+        for(i=0;i<ds.length;i++){
+            d = ds[i]
+            var body = []
+            body[0] = d.id;
+            body[1] = d.username;
+            body[2] = d.password;
+            $scope.list[i] = body
+        }
+
+//        var arr = {
+//            nice:"nice"
+//        }
+
+//        $log.debug($.toArray(arr)["nice"])
+    })
+
+
+</script>
+
+</body>
+</html>
